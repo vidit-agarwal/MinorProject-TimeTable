@@ -1,0 +1,22 @@
+.first_year, .second_year, .third_year, .final_year{
+	height: auto;
+	background-color: #efefef;
+	width:100%;
+	padding: 20px 20px 20px 20px ;
+	margin-top: 30px ;
+
+
+}
+.first_year>h3, .second_year>h3, .third_year>h3, .final_year>h3 {
+	text-align: center;
+}
+.time_table{
+	text-align: center;
+	width:100%;
+	background-color: #f9f9f9;
+	height: auto;
+	align-content: center;
+	font-style: cursive ;
+	font-weight: bold;
+
+}
