@@ -350,7 +350,10 @@ include 'teacher_time_table.php';
 	//NOW WE WILL GENERATE TEACHER TIME TABLE : 
 	//Approach used : generate class time table first -> match with teacher because initially all are empty and we are starting with IT , So, this approach is best here. 
 
-//	$it_teacher_time_table = $_SESSION['it_teacher_time_table'] ;
+	$it_teacher_time_table_2 = $_SESSION['it_teacher_time_table'] ;
+
+	
+	
 	for($i=0 ; $i< count($teacher_list_sub_2yr) ; $i++)
 	{	
 		$get_val = array_search( $teacher_list_sub_2yr[$i][1] ,  $all_teacher_name ,true); // here $all_teacher_name comes from the different file 
@@ -366,11 +369,9 @@ include 'teacher_time_table.php';
 					{
 						if($time_table_2yr[$j][$k]== $teacher_list_sub_2yr[$i][0]) // checking that the sub is of teacher found in the class
 						{
-							$_SESSION['it_teacher_time_table'][$teacher_list_sub_2yr[$i][1]][$j][$k] = $time_table_2yr[$j][$k] ;
+							$it_teacher_time_table_2[$teacher_list_sub_2yr[$i][1]][$j][$k] = $time_table_2yr[$j][$k] ;
 						}
-						else{
-								$_SESSION['it_teacher_time_table'][$teacher_list_sub_2yr[$i][1]][$j][$k]="0" ;	
-						}   
+						  
 					}
 				}
 		
@@ -379,8 +380,7 @@ include 'teacher_time_table.php';
 		
 	}
 
-
-
+	
 	// now we will loop through all lab time table 
 
 	for($i=0 ; $i< count($teacher_list_lab_2yr) ; $i++)
@@ -399,13 +399,13 @@ include 'teacher_time_table.php';
 							
 							if($k%2==0)
 							{
-								$_SESSION['it_teacher_time_table'][$teacher_list_lab_2yr[$i][1]][$j][$k] = $time_table_2yr[$j][$k] ;
-								$_SESSION['it_teacher_time_table'][$teacher_list_lab_2yr[$i][1]][$j][$k+1] = $time_table_2yr[$j][$k] ;	
+								$it_teacher_time_table_2[$teacher_list_lab_2yr[$i][1]][$j][$k] = $time_table_2yr[$j][$k] ;
+								$it_teacher_time_table_2[$teacher_list_lab_2yr[$i][1]][$j][$k+1] = $time_table_2yr[$j][$k] ;	
 							}	
 							else
 							{
-								$_SESSION['it_teacher_time_table'][$teacher_list_lab_2yr[$i][1]][$j][$k] = $time_table_2yr[$j][$k] ;
-								$_SESSION['it_teacher_time_table'][$teacher_list_lab_2yr[$i][1]][$j][$k-1] = $time_table_2yr[$j][$k] ;
+								$it_teacher_time_table_2[$teacher_list_lab_2yr[$i][1]][$j][$k] = $time_table_2yr[$j][$k] ;
+								$it_teacher_time_table_2[$teacher_list_lab_2yr[$i][1]][$j][$k-1] = $time_table_2yr[$j][$k] ;
 
 							}
 
@@ -413,19 +413,15 @@ include 'teacher_time_table.php';
 
 							
 						}   
-						else {
-							if ( empty($_SESSION['it_teacher_time_table'][$teacher_list_lab_2yr[$i][1]][$j][$k]) )
-							{
-									$_SESSION['it_teacher_time_table'][$teacher_list_lab_2yr[$i][1]][$j][$k]= "0" ;
-							}	
+						
 						}
 					}
 				}
 		}
-		}
+		
 	}
 
-//	$_SESSION['it_teacher_time_table'] = $it_teacher_time_table ;
+	$_SESSION['it_teacher_time_table'] = $it_teacher_time_table_2 ;
 
 	foreach ($_SESSION['it_teacher_time_table'] as $key => $value) {
 

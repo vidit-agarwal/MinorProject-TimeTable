@@ -1,6 +1,7 @@
 
 <?php
-	// an array for time tab;e
+	session_start() ;
+	// an array for time table
 	$time_table_3yr = [[]] ;
 
 	//initialise the time table 
@@ -17,12 +18,12 @@
 	//subject 
 
 	$teacher_list_sub= array(
-		array("ADA" , "Mr. D K Mishra") ,
-		array("SE" , "Mrs. Samrity Khurana" ),
-		array("JAVA" , "Mr. Atul") ,
-		array("IM" , "Mr. Prakash") , // outer dept sub
- 		array("CS",  "Mrs. Mukti") , // outer dept sub
-		array("CSP" , "Dr. Taruna")  //outer dept  subject
+		array("ADA" , "Mr_DK_Mishra") ,
+		array("SE" , "Ms_Samrity_Khurana" ),
+		array("JAVA" , "Mr_Atul") ,
+		array("IM" , "Mr_Prakash") , // outer dept sub
+ 		array("CS",  "Ms_Mukti") , // outer dept sub
+		array("CSP" , "Dr_Taruna")  //outer dept  subject
 		) ;
 	
 	
@@ -34,11 +35,11 @@
 
 	$teacher_list_lab= array(
 		
-		array("ADA-L",  "Mr. D K Mishra")	,  // bca shafique sir has choosen theory foc 	
-		array("SE-L" , "Mrs. Samrity Khurana") ,
-		array("JAVA-L" , "Mr. Atul"),
-		array("CS-L" , "Mrs. Mukti" ),
-		array("CSP-L", "Dr. Taruna")
+		array("ADA-L",  "Mr_DK_Mishra")	,  // bca shafique sir has choosen theory foc 	
+		array("SE-L" , "Ms_Samrity_Khurana") ,
+		array("JAVA-L" , "Mr_Atul"),
+		array("CS-L" , "Ms_Mukti" ),
+		array("CSP-L", "Dr_Taruna")
 		
 		) ;
 
@@ -319,7 +320,8 @@
 		echo "<br>" ;
 		
 	}
-
+	/*
+	//inserting into the database
 	$mysqli = NEW  MySQLi('localhost', 'root', 'root' , 'it_time_table') ;
 
      //traverse all the values 
@@ -336,6 +338,78 @@
 
 
 		
+		
+	}
+
+	*/
+
+	//creating teacher time table here
+	$it_teacher_time_table_3 = $_SESSION['it_teacher_time_table'] ;
+
+	for($i=0 ; $i< count($teacher_list_sub) ; $i++)
+	{	
+		$get_val = array_search( $teacher_list_sub[$i][1] ,  $all_teacher_name ,true); // here $all_teacher_name comes from the different file 
+		//here it return index of found  in $all_teacher_name starting from 0 ;
+		
+		if (!( strlen($get_val) == 0 && !is_null($get_val) )) {
+		if($get_val>=0 && $get_val<=7)   // this means that teacher is found and is of IT dept 
+		{   
+
+				for($j=0 ; $j<5 ; $j++)
+				{
+					for($k=0 ; $k<8 ; $k++)
+					{
+						if($time_table_3yr[$j][$k]== $teacher_list_sub[$i][0]) // checking that the sub is of teacher found in the class
+						{
+							$it_teacher_time_table_3[$teacher_list_sub[$i][1]][$j][$k] = $time_table_3yr[$j][$k] ;
+						}
+						  
+					}
+				}
+		
+
+		} }
+		
+	}
+
+
+	// now we will loop through all lab time table 
+
+	for($i=0 ; $i< count($teacher_list_lab) ; $i++)
+	{
+		$get_val = array_search( $teacher_list_lab[$i][1] ,  $all_teacher_name ,true);
+		if (!( strlen($get_val) == 0 && !is_null($get_val) )) {
+		if($get_val>=0 && $get_val<=7)   // this means that teacher is found and is of IT dept 
+		{
+				
+				for($j=0 ; $j<5 ; $j++)
+				{
+					for($k=0 ; $k<8 ; $k++)
+					{
+						if($time_table_3yr[$j][$k]== $teacher_list_lab[$i][0]) // checking that the sub is of teacher found in the class
+						{
+							
+							if($k%2==0)
+							{
+								$it_teacher_time_table_3[$teacher_list_lab[$i][1]][$j][$k] = $time_table_3yr[$j][$k] ;
+								$it_teacher_time_table_3[$teacher_list_lab[$i][1]][$j][$k+1] = $time_table_3yr[$j][$k] ;	
+							}	
+							else
+							{
+								$it_teacher_time_table_3[$teacher_list_lab[$i][1]][$j][$k] = $time_table_3yr[$j][$k] ;
+								$it_teacher_time_table_3[$teacher_list_lab[$i][1]][$j][$k-1] = $time_table_3yr[$j][$k] ;
+
+							}
+
+
+
+							
+						}   
+						
+						}
+					}
+				}
+		}
 		
 	}
 
